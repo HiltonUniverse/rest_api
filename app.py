@@ -20,12 +20,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'hilton'
 api = Api(app)
 
-# Before the first user request runs, This decorator will run the create_tables() method and
-# we will create a data.db with all the tables, unless they exist they exist already.
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
 jwt = JWT(app, authenticate, identity)  # /auth, path is generated automatically
 
 api.add_resource(Item, '/item/<string:name>')
