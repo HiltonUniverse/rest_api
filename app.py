@@ -1,3 +1,7 @@
+ #In heroku the database URL has been added as Environment variable. Environment Variable is something that the Heroku's
+ # virtual machine keeps track of. So we read that variable from the environment using import os
+import os
+
 from flask import Flask
 from flask_restful import Api
 
@@ -11,7 +15,7 @@ from resources.store import Store,StoreList
 app = Flask(__name__)
 #notifying the sql_alchemy where it can find the data.db. sqlite:///data.db means look at the current directory.
 #NOTE: it doesn't have to be "sqlite", it can be "mysql, pastro sql, oracle, it can be anything" and it will still work.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 #In order to know when an object has been changed but not saved to the database. The "flask"_sqlalchemy has a tracker that
 # tracks every change that we made to the sql_alchemy session and that takes resources. so we turn off  the "flask"_sqlalchemy
 # tracker. The main library of the "SqlAlchemy" itself has a tracker that is better than the tracker.
